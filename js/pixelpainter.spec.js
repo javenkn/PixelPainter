@@ -62,6 +62,7 @@ describe('createGrid', function(){
   describe('attributes parameter', function(){
   //If no column value is provided, all attributes should get applied to each
   //grid element
+
     it('should return an html element with 1 row, each with 1 column, each with no attributes.', function(){
       var noAttributes = createGrid(1, {});
       expect(noAttributes.children.length).to.equal(1);
@@ -87,9 +88,10 @@ describe('createGrid', function(){
 
     it('should return an html element with 10 rows, each with 10 columns, each with the class of grid and style of background-color: black.', function(){
       var grid = createGrid(10, {class: 'grid', style: 'background-color: black'});
+      //rows
+      expect(grid.children.length).to.equal(10);
+
       for(var i = 0; i < grid.children.length; i++){
-        //rows
-        expect(grid.children.length).to.equal(10);
         //columns
         expect(grid.children[i].children.length).to.equal(10);
         //attributes
@@ -102,5 +104,26 @@ describe('createGrid', function(){
         }
       }
     });
+
+  //If a column value is provided, that should be the number of columns
+  //returned, along with the attributes applied.
+
+    it('should return an html element with 10 rows, each with 5 columns, each with the class of grid.', function(){
+      var grid = createGrid(10, 5, {class: 'grid'});
+      //rows
+      expect(grid.children.length).to.equal(10);
+
+      for(var i = 0; i < grid.children.length; i++){
+        //columns
+        expect(grid.children[i].children.length).to.equal(5);
+        //attributes
+        expect(grid.children[i].getAttribute("class")).to.equal("grid");
+
+        for(var j = 0; j < grid.children[i].children.length; j++){
+          expect(grid.children[i].children[j].getAttribute("class")).to.equal("grid");
+        }
+      }
+    });
+
   });
 });
