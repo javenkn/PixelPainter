@@ -19,7 +19,6 @@ function createGrid(rows, columns, attributes){
   //creates a HUGE grid div
   var divGrid = document.createElement("DIV");
   divGrid.setAttribute("id", "divGrid");
-  document.getElementById('pixelPainter').appendChild(divGrid);
 
   //this for loop goes through the passed in parameter "rows" and creates divs
   //for the amount of rows needed
@@ -32,7 +31,7 @@ function createGrid(rows, columns, attributes){
 
     //I set the attribute of each row to an id of divRow number for counting
     //purposes
-    divRows.setAttribute("class", "divRows");
+    //divRows.setAttribute("class", "divRows");
 
     //after a divRow is created it gets appended into the HUGE div grid
     divGrid.appendChild(divRows);
@@ -48,11 +47,12 @@ function createGrid(rows, columns, attributes){
 
       //I set the attribute of each row to an id of divRow number for counting
       //purposes
-      divColumns.setAttribute("class", "divColumns");
+      //divColumns.setAttribute("class", "divColumns");
       //after a divRow is created it gets appended into the HUGE div grid
       divRows.appendChild(divColumns);
     }
   }
+  //document.getElementById('pixelPainter').appendChild(divGrid);
   return divGrid;
 }
 
@@ -68,4 +68,5 @@ function addAttributes(divs, attributes){
   }
 }
 
-createGrid(10,10);
+var divGrid = createGrid(10,10, {class: 'grid'});
+document.getElementById('pixelPainter').appendChild(divGrid);

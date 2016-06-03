@@ -1,9 +1,8 @@
 #divGrid{
   display: inline-block;
-  float: center;
 }
 
-.divColumns{
+/*.divColumns{
   width: 50px;
   height: 50px;
   float: left;
@@ -11,5 +10,11 @@
 }
 
 .divRows{
+
+}*/
+.grid{
+  width: 50px;
+  height: 50px;
   float: left;
+  border: 0.5px solid black;
 }
