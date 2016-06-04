@@ -1,20 +1,33 @@
+#title{
+  text-align: center;
+}
+
+.rainbow{
+  background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+  background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+  color:transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 #divGrid{
+  position: fixed;
+  left: 50%;
   display: inline-block;
 }
 
-/*.divColumns{
-  width: 50px;
-  height: 50px;
+#colorSwatch{
   float: left;
-  border: 0.5px solid black;
+  display: inline-block;
 }
 
-.divRows{
+div > div > div{
+  position: relative;
+}
 
-}*/
-.grid{
+div > div > div > div{
   width: 50px;
   height: 50px;
-  float: left;
+  display: inline-block;
   border: 0.5px solid black;
 }
