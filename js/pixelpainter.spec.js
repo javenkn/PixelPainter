@@ -72,7 +72,7 @@ describe('createGrid', function(){
     });
 
     it('should return an html element with 10 rows, each with 10 columns, each with the class of grid.', function(){
-      var gridAttributes = createGrid(10, {class: 'grid'});
+      var gridAttributes = createGrid(10, {className: 'grid'});
       for(var i = 0; i < gridAttributes.children.length; i++){
         //rows
         expect(gridAttributes.children.length).to.equal(10);
@@ -87,7 +87,7 @@ describe('createGrid', function(){
     });
 
     it('should return an html element with 10 rows, each with 10 columns, each with the class of grid and style of background-color: black.', function(){
-      var grid = createGrid(10, {class: 'grid', style: 'background-color: black'});
+      var grid = createGrid(10, {className: 'grid', style: 'background-color: black;'});
       //rows
       expect(grid.children.length).to.equal(10);
 
@@ -96,11 +96,11 @@ describe('createGrid', function(){
         expect(grid.children[i].children.length).to.equal(10);
         //attributes
         expect(grid.children[i].getAttribute("class")).to.equal("grid");
-        expect(grid.children[i].getAttribute("style")).to.equal("background-color: black");
+        expect(grid.children[i].getAttribute("style")).to.equal("background-color: black;");
         for(var j = 0; j < grid.children[i].children.length; j++){
           //attributes
           expect(grid.children[i].children[j].getAttribute("class")).to.equal("grid");
-          expect(grid.children[i].children[j].getAttribute("style")).to.equal("background-color: black");
+          expect(grid.children[i].children[j].getAttribute("style")).to.equal("background-color: black;");
         }
       }
     });
@@ -109,7 +109,7 @@ describe('createGrid', function(){
   //returned, along with the attributes applied.
 
     it('should return an html element with 10 rows, each with 5 columns, each with the class of grid.', function(){
-      var grid = createGrid(10, 5, {class: 'grid'});
+      var grid = createGrid(10, 5, {className: 'grid'});
       //rows
       expect(grid.children.length).to.equal(10);
 
