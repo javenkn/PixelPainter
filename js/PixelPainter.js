@@ -50,6 +50,7 @@ function createGrid(rows, columns, attributes){
       addAttributes(divColumns, attributes);
 
       addAttributes(divColumns, {
+        onmouseover: colorTheDiv,
         onclick: colorTheDiv,
       });
 
@@ -78,15 +79,34 @@ function addAttributes(div, attributes){
 
 //onclick function
 function colorTheDiv(hexColorString){
-  this.style.backgroundColor = "red";
-  if(erasePressed === true){
+  var cells = document.querySelectorAll('div > div > div > div');
+  if(fillPressed === true && erasePressed === false){
+    Array.prototype.forEach.call(cells, function(cell){
+      cell.addEventListener('click',function(){
+        this.style.backgroundColor = "red";
+        cellColored = true;
+      });
+    });
+  }else if(erasePressed === true && fillPressed === true){
+    cells = document.querySelectorAll('div > div > div > div');
+    Array.prototype.forEach.call(cells, function(cell){
+      cell.addEventListener('click',function(){
+        if(cellColored === true){
+          this.style.backgroundColor = "";
+          cellColored = false;
+        }
+      });
+    });
+  }else if(erasePressed === true ){ //if eraser was pressed then erase the div
     this.style.backgroundColor = "";
     cellColored = false;
-  }else if(cellColored === false){
+  }else{
+    this.style.backgroundColor = "red";
     cellColored = true;
   }
 }
 
+//function that clears the entire grid
 function clearGrid(){
     var cells = document.querySelectorAll('div > div > div > div');
     Array.prototype.forEach.call(cells, function(cell){
@@ -94,6 +114,7 @@ function clearGrid(){
     });
 }
 
+//function that checks if the erase button was clicked or not
 function eraseOn(event){
   if(erasePressed === false){
     this.style.backgroundColor = "pink";
@@ -101,6 +122,17 @@ function eraseOn(event){
   }else if(erasePressed === true){
     this.style.backgroundColor = "";
     erasePressed = false;
+  }
+}
+
+//function that checks if the fill button was clicked or not
+function fillOn(event){
+  if(fillPressed === false){
+    this.style.backgroundColor = "yellow";
+    fillPressed = true;
+  }else if(fillPressed === true){
+    this.style.backgroundColor = "";
+    fillPressed = false;
   }
 
 }
@@ -113,3 +145,6 @@ var eraseButton = document.getElementById('eraseButton');
 var erasePressed = false;
 var cellColored = false;
 eraseButton.addEventListener('click', eraseOn);
+var fillButton = document.getElementById('fillButton');
+fillButton.addEventListener('click', fillOn);
+var fillPressed = false;
