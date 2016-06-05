@@ -37,8 +37,8 @@
 }
 
 #colorPalette > div > div{
-  width:  20px;
-  height: 20px;
+  width:  15px;
+  height: 15px;
   display: inline-block;
   border: 0.5px solid black;
 }
