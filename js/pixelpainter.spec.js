@@ -68,6 +68,7 @@ describe('createGrid', function(){
       expect(noAttributes.children.length).to.equal(1);
       for(var i = 0; i < noAttributes.children.length; i++){
         expect(noAttributes.children[i].children.length).to.equal(1);
+        expect(noAttributes.children[i].hasAttribute('*')).to.equal(false);
       }
     });
 

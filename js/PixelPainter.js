@@ -79,14 +79,37 @@ function addAttributes(div, attributes){
 //onclick function
 function colorTheDiv(hexColorString){
   this.style.backgroundColor = "red";
+  if(erasePressed === true){
+    this.style.backgroundColor = "";
+    cellColored = false;
+  }else if(cellColored === false){
+    cellColored = true;
+  }
 }
 
 function clearGrid(){
-  var button = document.getElementById('clearButton');
-  button.addEventListener('click', function(){
-    document.querySelectorAll(div > div > div > div);
-  });
+    var cells = document.querySelectorAll('div > div > div > div');
+    Array.prototype.forEach.call(cells, function(cell){
+      cell.style.backgroundColor = "";
+    });
+}
+
+function eraseOn(event){
+  if(erasePressed === false){
+    this.style.backgroundColor = "pink";
+    erasePressed = true;
+  }else if(erasePressed === true){
+    this.style.backgroundColor = "";
+    erasePressed = false;
+  }
+
 }
 
 var divGrid = createGrid(10,10, {class: 'grid'});
 document.getElementById('pixelPainter').appendChild(divGrid);
+var button = document.getElementById('clearButton');
+button.addEventListener('click', clearGrid);
+var eraseButton = document.getElementById('eraseButton');
+var erasePressed = false;
+var cellColored = false;
+eraseButton.addEventListener('click', eraseOn);
