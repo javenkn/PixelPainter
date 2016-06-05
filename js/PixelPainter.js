@@ -26,7 +26,6 @@ function createGrid(rows, columns, attributes){
 
   //creates a HUGE grid div
   var divGrid = document.createElement("DIV");
-  divGrid.setAttribute("id", "divGrid");
 
   //this for loop goes through the passed in parameter "rows" and creates divs
   //for the amount of rows needed
@@ -51,24 +50,18 @@ function createGrid(rows, columns, attributes){
 
       addAttributes(divColumns, {
         onmouseover: colorTheDiv,
-        onclick: colorTheDiv,
       });
 
       //after a divRow is created it gets appended into the HUGE div grid
       divRows.appendChild(divColumns);
     }
   }
-  //document.getElementById('pixelPainter').appendChild(divGrid);
   return divGrid;
 }
 
 //if there are attributes that need to be added then it runs this function
 function addAttributes(div, attributes){
   if(typeof attributes === "object"){
-    // var attributeKeys = Object.keys(attributes);
-    // for(var i = 0; i < attributeKeys.length; i++){
-    //   div.setAttribute(attributeKeys[i], attributes[attributeKeys[i]]);
-    // }
     Object.keys(attributes).forEach(function(attribute){
       div[attribute] = attributes[attribute];
     });
@@ -79,7 +72,7 @@ function addAttributes(div, attributes){
 
 //onclick function
 function colorTheDiv(hexColorString){
-  var cells = document.querySelectorAll('div > div > div > div');
+  var cells = document.querySelectorAll('#divGrid > div > div');
   if(fillPressed === true && erasePressed === false){
     Array.prototype.forEach.call(cells, function(cell){
       cell.addEventListener('click',function(){
@@ -88,7 +81,7 @@ function colorTheDiv(hexColorString){
       });
     });
   }else if(erasePressed === true && fillPressed === true){
-    cells = document.querySelectorAll('div > div > div > div');
+    cells = document.querySelectorAll('#divGrid > div > div');
     Array.prototype.forEach.call(cells, function(cell){
       cell.addEventListener('click',function(){
         if(cellColored === true){
@@ -108,7 +101,7 @@ function colorTheDiv(hexColorString){
 
 //function that clears the entire grid
 function clearGrid(){
-    var cells = document.querySelectorAll('div > div > div > div');
+    var cells = document.querySelectorAll('#divGrid > div > div');
     Array.prototype.forEach.call(cells, function(cell){
       cell.style.backgroundColor = "";
     });
@@ -134,11 +127,67 @@ function fillOn(event){
     this.style.backgroundColor = "";
     fillPressed = false;
   }
-
 }
 
-var divGrid = createGrid(10,10, {class: 'grid'});
-document.getElementById('pixelPainter').appendChild(divGrid);
+function createPalette(rows, columns, attributes){
+  if(rows < 0 || typeof rows !== "number" || isNaN(rows)){
+    throw new Error("Rows must be a positive number");
+  }
+  //checks if the parameter "columns" is an object
+  //if it is then it sets the global variable attributes to columns
+  if(typeof columns === "object"){
+    attributes = columns;
+  }
+
+  //checks if the columns is undefined or is NaN
+  //if it is then it sets the columns to the rows
+  if(columns === undefined || isNaN(columns)){
+    columns = rows;
+  }
+
+  //creates a HUGE grid div
+  var divPalette = document.createElement("DIV");
+
+  //this for loop goes through the passed in parameter "rows" and creates divs
+  //for the amount of rows needed
+  for(var i = 0; i < rows; i++){
+    var divRows = document.createElement("DIV");
+
+    //if attributes is an object then
+    //it sets the attributes inside each row div that is created
+    addAttributes(divRows, attributes);
+
+    //after a divRow is created it gets appended into the HUGE div grid
+    divPalette.appendChild(divRows);
+
+    //this for loop goes through the passed in parameter "columns" and creates
+    //divs for the amount of columns needed
+    for(var j = 0; j < columns; j++){
+      var divColumns = document.createElement("DIV");
+
+      //if attributes is an object then
+      //it sets the attributes inside each row div that is created
+      addAttributes(divColumns, attributes);
+
+      //after a divRow is created it gets appended into the HUGE div grid
+      divRows.appendChild(divColumns);
+    }
+  }
+  return divPalette;
+}
+//fill the palette with colors
+function fillPalette(){
+  var colors = ['#00FFFF', '#000000', '#0000FF', '#FFFF00', '#FF0000', '  #FFC0CB','#FFA500', '#D3D3D3', '#F0E68C', '#008000', '#808080', '#FFD700', '#9400D3',
+  '#9ACD32', '#EE82EE', '#FF6347', '#008080', '#00FF7F', '#6A5ACD', '#8B4513'];
+  var cells = document.querySelectorAll('#colorPalette > div > div');
+  Array.prototype.forEach.call(cells, function(cell,index){
+    cell.style.backgroundColor = colors[index];
+  });
+}
+
+var divGrid = createGrid(10,10);
+var gridElement = document.getElementById('pixelPainter').appendChild(divGrid);
+gridElement.id = "divGrid";
 var button = document.getElementById('clearButton');
 button.addEventListener('click', clearGrid);
 var eraseButton = document.getElementById('eraseButton');
@@ -148,3 +197,8 @@ eraseButton.addEventListener('click', eraseOn);
 var fillButton = document.getElementById('fillButton');
 fillButton.addEventListener('click', fillOn);
 var fillPressed = false;
+
+var colorPalette = createPalette(10, 2);
+var paletteElement = document.getElementById('pixelPainter').appendChild(colorPalette);
+colorPalette.id = "colorPalette";
+fillPalette();

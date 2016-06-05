@@ -10,24 +10,35 @@
   background-clip: text;
 }
 
+#colorPalette{
+  position: relative;
+  display: inline-block;
+}
+
 #divGrid{
   position: fixed;
   left: 50%;
   display: inline-block;
 }
 
-#colorSwatch{
-  float: left;
-  display: inline-block;
-}
-
-div > div > div{
+#divGrid > div{
   position: relative;
 }
 
-div > div > div > div{
+#divGrid > div > div{
   width: 50px;
   height: 50px;
+  display: inline-block;
+  border: 0.5px solid black;
+}
+
+#colorPalette > div {
+  position: relative;
+}
+
+#colorPalette > div > div{
+  width:  20px;
+  height: 20px;
   display: inline-block;
   border: 0.5px solid black;
 }
