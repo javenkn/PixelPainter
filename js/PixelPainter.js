@@ -180,7 +180,7 @@ function replaceOn(event){
 }
 
 //variables for divs and buttons
-var divGrid = createGrid(10,10);
+var divGrid = createGrid(42,84);
 var gridElement = document.getElementById('pixelPainter').appendChild(divGrid);
 gridElement.id = "divGrid";
 var divCells = document.querySelectorAll('#divGrid > div > div');
