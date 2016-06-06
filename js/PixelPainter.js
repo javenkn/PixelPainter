@@ -75,6 +75,12 @@ function colorOneDiv(){
   }else if(erasePressed === true && fillPressed === true){
       this.style.backgroundColor = "";
   }
+  if(replacePressed === true && erasePressed === false && fillPressed === false){
+    var cells = document.querySelectorAll('#divGrid > div > div');
+    Array.prototype.forEach.call(cells, function(cell){
+      cell.style.backgroundColor = colorChosen;
+    });
+  }
 }
 
 //function that paints while mouse is down
@@ -163,6 +169,16 @@ function chooseColor(event){
   colorChosen = this.style.backgroundColor;
 }
 
+function replaceOn(event){
+  if(replacePressed === false){
+    this.style.backgroundColor = "orange";
+    replacePressed = true;
+  }else if(replacePressed === true){
+    this.style.backgroundColor = "";
+    replacePressed = false;
+  }
+}
+
 //variables for divs and buttons
 var divGrid = createGrid(10,10);
 var gridElement = document.getElementById('pixelPainter').appendChild(divGrid);
@@ -178,7 +194,6 @@ button.addEventListener('click', clearGrid);
 //variables for eraser functionality
 var eraseButton = document.getElementById('eraseButton');
 var erasePressed = false;
-var cellColored = false;
 eraseButton.addEventListener('click', eraseOn);
 
 //variables for fill functionality
@@ -198,3 +213,8 @@ console.log(paletteCells);
 Array.prototype.forEach.call(paletteCells, function(cell){
   cell.onclick = chooseColor;
 });
+
+//variables for replace functionality
+var replaceButton = document.getElementById('replaceButton');
+replaceButton.addEventListener('click', replaceOn);
+var replacePressed = false;
