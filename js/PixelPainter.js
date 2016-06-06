@@ -48,7 +48,7 @@ function createGrid(rows, columns, attributes){
       //it sets the attributes inside each row div that is created
       addAttributes(divColumns, attributes);
 
-      addAttributes(divColumns, {onclick: colorTheGrid});
+      addAttributes(divColumns, {onclick: colorOneDiv});
 
       //after a divRow is created it gets appended into the HUGE div grid
       divRows.appendChild(divColumns);
@@ -68,8 +68,8 @@ function addAttributes(div, attributes){
   }
 }
 
-//onclick function
-function colorTheGrid(){
+//onclick function that colors one div at a time
+function colorOneDiv(){
   if(erasePressed === false && fillPressed === true){
       this.style.backgroundColor = colorChosen;
   }else if(erasePressed === true && fillPressed === true){
@@ -77,6 +77,7 @@ function colorTheGrid(){
   }
 }
 
+//function that paints while mouse is down
 function clickDrag(){
   var cells = document.querySelectorAll('#divGrid > div > div');
   Array.prototype.forEach.call(cells, function(cell){
@@ -89,6 +90,7 @@ function clickDrag(){
   }
 }
 
+//function that stops painting when mouse is up
 function stopDragging(){
   var cells = document.querySelectorAll('#divGrid > div > div');
   Array.prototype.forEach.call(cells, function(cell){
@@ -127,53 +129,6 @@ function fillOn(event){
   }
 }
 
-function createPalette(rows, columns, attributes){
-  if(rows < 0 || typeof rows !== "number" || isNaN(rows)){
-    throw new Error("Rows must be a positive number");
-  }
-  //checks if the parameter "columns" is an object
-  //if it is then it sets the global variable attributes to columns
-  if(typeof columns === "object"){
-    attributes = columns;
-  }
-
-  //checks if the columns is undefined or is NaN
-  //if it is then it sets the columns to the rows
-  if(columns === undefined || isNaN(columns)){
-    columns = rows;
-  }
-
-  //creates a HUGE grid div
-  var divPalette = document.createElement("DIV");
-
-  //this for loop goes through the passed in parameter "rows" and creates divs
-  //for the amount of rows needed
-  for(var i = 0; i < rows; i++){
-    var divRows = document.createElement("DIV");
-
-    //if attributes is an object then
-    //it sets the attributes inside each row div that is created
-    addAttributes(divRows, attributes);
-
-    //after a divRow is created it gets appended into the HUGE div grid
-    divPalette.appendChild(divRows);
-
-    //this for loop goes through the passed in parameter "columns" and creates
-    //divs for the amount of columns needed
-    for(var j = 0; j < columns; j++){
-      var divColumns = document.createElement("DIV");
-
-      //if attributes is an object then
-      //it sets the attributes inside each row div that is created
-      addAttributes(divColumns, attributes);
-      addAttributes(divColumns, {onclick: chooseColor});
-
-      //after a divRow is created it gets appended into the HUGE div grid
-      divRows.appendChild(divColumns);
-    }
-  }
-  return divPalette;
-}
 //fill the palette with colors
 function fillPalette(){
   var colors =['#000000','#c0c0c0','#808080','#ffffff','#800000','#ff0000',
@@ -206,7 +161,6 @@ function fillPalette(){
 
 function chooseColor(event){
   colorChosen = this.style.backgroundColor;
-  return colorChosen;
 }
 
 //variables for divs and buttons
@@ -234,7 +188,13 @@ var fillPressed = false;
 
 //variables for colorpalette
 var colorChosen;
-var colorPalette = createPalette(12, 12);
+var colorPalette = createGrid(12, 12);
 var paletteElement = document.getElementById('pixelPainter').appendChild(colorPalette);
 colorPalette.id = "colorPalette";
 fillPalette();
+
+var paletteCells = document.querySelectorAll('#colorPalette > div > div');
+console.log(paletteCells);
+Array.prototype.forEach.call(paletteCells, function(cell){
+  cell.onclick = chooseColor;
+});
