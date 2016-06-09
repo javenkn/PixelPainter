@@ -185,8 +185,11 @@ function replaceOn(event){
 
 //saves the grid to location.hash and restores the saved image
 function saveGrid(event){
-  alert('Grid Saved.');
-  newGrid = divGrid;
+  if(window.location.hash === ""){
+    alert('Grid Saved.');
+    window.location.hash = divGrid;
+    var html = $.parseHTML(window.location.hash);
+  }
 }
 
 //function that uploads user's picture so the user can draw on it
@@ -202,29 +205,66 @@ function readImage(event){
 }
 
 //resized the grid for the chosen image
-function resizeGrid(){
-  var parent = document.getElementById('divGrid');
-  while(parent.firstChild){
-    parent.removeChild(parent.firstChild);
+function resizeGrid(event){
+  if(resizePressed === false){
+    this.style.backgroundColor = "green";
+    resizePressed = true;
+
+    var parent = document.getElementById('divGrid');
+    while(parent.firstChild){
+      parent.removeChild(parent.firstChild);
+    }
+    divGrid = createGrid(120,250);
+    while(divGrid.children[0]){
+      document.getElementById('divGrid').appendChild(divGrid.children[0]);
+    }
+    var cells = document.querySelectorAll('#divGrid > div > div');
+    Array.prototype.forEach.call(cells, function(cell){
+      cell.style.width = "2px";
+      cell.style.height = "2px";
+      cell.style.borderColor = "white";
+      cell.addEventListener('mousedown', clickDrag);
+      cell.addEventListener('mouseup', stopDragging);
+    });
+  }else if(resizePressed === true){
+    this.style.backgroundColor = "";
+    resizePressed = false;
+
+    var par = document.getElementById('divGrid');
+    while(par.firstChild){
+      par.removeChild(par.firstChild);
+    }
+    divGrid = createGrid(40,83);
+    while(divGrid.children[0]){
+      document.getElementById('divGrid').appendChild(divGrid.children[0]);
+    }
+    var orgCells = document.querySelectorAll('#divGrid > div > div');
+    Array.prototype.forEach.call(orgCells, function(cell){
+      cell.addEventListener('mousedown', clickDrag);
+      cell.addEventListener('mouseup', stopDragging);
+    });
   }
-  divGrid = createGrid(130,250);
-  console.log(divGrid.children.length);
-  console.log(parent.firstChild);
-  while(divGrid.children[0]){
-    document.getElementById('divGrid').appendChild(divGrid.children[0]);
-  }
-  var cells = document.querySelectorAll('#divGrid > div > div');
-  Array.prototype.forEach.call(cells, function(cell){
-    cell.style.width = "2px";
-    cell.style.height = "2px";
-    cell.style.borderColor = "white";
-    cell.addEventListener('mousedown', clickDrag);
-    cell.addEventListener('mouseup', stopDragging);
-  });
 }
 
+var titleElement = document.createElement('DIV');
+document.body.insertBefore(titleElement, document.body.firstChild);
+titleElement.id = "titleDiv";
+var titleGrid = createGrid(7,41);
+var titleGridElement = document.getElementById('titleDiv').appendChild(titleGrid);
+titleGridElement.id = "titleGrid";
+
+var titleRow = document.getElementById('titleGrid').children;
+titleRow[0].style.backgroundColor = "rgb(0, 0, 128)";
+titleRow[6].style.backgroundColor = "rgb(0, 0, 128)";
+
+var titleCells = document.querySelectorAll('#titleGrid > div > div');
+  Array.prototype.forEach.call(titleCells, function(cell, index){
+      cell.onclick = null;
+      cell.id = 'cell' + index;
+  });
+
 //variables for divs and buttons
-var divGrid = createGrid(43,83); //2px (120,250) //1px (170,320)
+var divGrid = createGrid(40,83); //2px (120,250) //1px (170,320)
 var gridElement = document.getElementById('pixelPainter').appendChild(divGrid);
 gridElement.id = "divGrid";
 
@@ -272,3 +312,4 @@ var uploadElement = document.getElementById('imageChooser');
 uploadElement.addEventListener('change', readImage);
 var resizeElement = document.getElementById('resizeButton');
 resizeElement.addEventListener('click', resizeGrid);
+var resizePressed = false;

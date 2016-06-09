@@ -1,5 +1,70 @@
-#title{
+#titleDiv{
+  margin-bottom: 10px;
+  width: 100%;
   text-align: center;
+}
+
+#titleGrid{
+  display: inline-block;
+}
+
+#cell41, #cell81, #cell82, #cell122, #cell123, #cell163, #cell164, #cell204, #cell205, #cell245{  /*sides*/
+  background-color: rgb(0, 0, 128);
+}
+
+#cell84, #cell85, #cell125, #cell126, #cell166{ /*P*/
+  background-color: rgb(255, 0, 0);
+}
+
+#cell87, #cell128, #cell169{ /*I*/
+  background-color: rgb(255, 140, 0);
+}
+
+#cell89, #cell91, #cell131, #cell171, #cell173{ /*X*/
+  background-color: rgb(255, 215, 0);
+}
+
+#cell93{ /*'*/
+  background-color: rgb(0, 255, 0);
+}
+
+#cell95, #cell136, #cell177, #cell178{ /*L*/
+  background-color: rgb(30,144, 255);
+}
+
+#cell100, #cell101, #cell141, #cell142, #cell182{ /*P*/
+  background-color: rgb(138, 43, 226);
+}
+
+#cell104, #cell144, #cell146, #cell185, #cell187{ /*A*/
+  background-color: rgb(75, 0, 130);
+}
+
+#cell107, #cell148, #cell189{ /*I*/
+  background-color: rgb(255, 105, 180);
+}
+
+#cell109, #cell110, #cell111, #cell150, #cell152, #cell191, #cell193{ /*N*/
+  background-color: rgb(210, 105, 30);
+}
+
+#cell113, #cell114, #cell115, #cell155, #cell196{ /*T*/
+  background-color: rgb(210, 180, 140);
+}
+
+#cell117{ /*'*/
+  background-color: rgb(128, 128, 128);
+}
+
+#cell119, #cell120, #cell160, #cell201{ /*R*/
+  background-color: rgb(0, 0, 0);
+}
+
+#titleGrid > div > div{
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  display: inline-block;
 }
 
 .button:hover{
@@ -42,8 +107,8 @@
 #divGrid > div > div{
   width: 10px; /*default 10px*/
   height: 10px; /*default 10px*/
-  border-style:solid;
-  border-width:thin;
+  border-style: solid;
+  border-width: thin;
   border-color: rgba(0, 0, 0, 0.1);
   margin: 0;
   display: inline-block;
