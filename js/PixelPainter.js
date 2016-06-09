@@ -25,7 +25,7 @@ function createGrid(rows, columns, attributes){
   }
 
   //creates a HUGE grid div
-  var divGrid = document.createElement("DIV");
+  var gridElement = document.createElement("DIV");
 
   //this for loop goes through the passed in parameter "rows" and creates divs
   //for the amount of rows needed
@@ -37,7 +37,7 @@ function createGrid(rows, columns, attributes){
     addAttributes(divRows, attributes);
 
     //after a divRow is created it gets appended into the HUGE div grid
-    divGrid.appendChild(divRows);
+    gridElement.appendChild(divRows);
 
     //this for loop goes through the passed in parameter "columns" and creates
     //divs for the amount of columns needed
@@ -54,7 +54,7 @@ function createGrid(rows, columns, attributes){
       divRows.appendChild(divColumns);
     }
   }
-  return divGrid;
+  return gridElement;
 }
 
 //if there are attributes that need to be added then it runs this function
@@ -111,6 +111,8 @@ function clearGrid(){
     Array.prototype.forEach.call(cells, function(cell){
       cell.style.backgroundColor = "";
     });
+    var id = document.getElementById('divGrid');
+    id.style.backgroundImage = "";
 }
 
 //function that checks if the erase button was clicked or not
@@ -165,10 +167,12 @@ function fillPalette(){
   });
 }
 
+//function that sets the color that the user picks
 function chooseColor(event){
   colorChosen = this.style.backgroundColor;
 }
 
+//function that checks if the replace button is pressed
 function replaceOn(event){
   if(replacePressed === false){
     this.style.backgroundColor = "orange";
@@ -179,10 +183,51 @@ function replaceOn(event){
   }
 }
 
+//saves the grid to location.hash and restores the saved image
+function saveGrid(event){
+  alert('Grid Saved.');
+  newGrid = divGrid;
+}
+
+//function that uploads user's picture so the user can draw on it
+function readImage(event){
+  var imgFile = document.getElementById('imageChooser').files[0];
+  var imgReader = new FileReader();
+  imgReader.onloadend = function(){
+    document.getElementById('divGrid').style.backgroundImage = "url(" + imgReader.result + ")";
+  };
+  if(imgFile){
+    imgReader.readAsDataURL(imgFile);
+  }
+}
+
+//resized the grid for the chosen image
+function resizeGrid(){
+  var parent = document.getElementById('divGrid');
+  while(parent.firstChild){
+    parent.removeChild(parent.firstChild);
+  }
+  divGrid = createGrid(130,250);
+  console.log(divGrid.children.length);
+  console.log(parent.firstChild);
+  while(divGrid.children[0]){
+    document.getElementById('divGrid').appendChild(divGrid.children[0]);
+  }
+  var cells = document.querySelectorAll('#divGrid > div > div');
+  Array.prototype.forEach.call(cells, function(cell){
+    cell.style.width = "2px";
+    cell.style.height = "2px";
+    cell.style.borderColor = "white";
+    cell.addEventListener('mousedown', clickDrag);
+    cell.addEventListener('mouseup', stopDragging);
+  });
+}
+
 //variables for divs and buttons
-var divGrid = createGrid(42,84);
+var divGrid = createGrid(43,83); //2px (120,250) //1px (170,320)
 var gridElement = document.getElementById('pixelPainter').appendChild(divGrid);
 gridElement.id = "divGrid";
+
 var divCells = document.querySelectorAll('#divGrid > div > div');
 Array.prototype.forEach.call(divCells, function(cell){
   cell.addEventListener('mousedown', clickDrag);
@@ -209,7 +254,6 @@ colorPalette.id = "colorPalette";
 fillPalette();
 
 var paletteCells = document.querySelectorAll('#colorPalette > div > div');
-console.log(paletteCells);
 Array.prototype.forEach.call(paletteCells, function(cell){
   cell.onclick = chooseColor;
 });
@@ -218,3 +262,13 @@ Array.prototype.forEach.call(paletteCells, function(cell){
 var replaceButton = document.getElementById('replaceButton');
 replaceButton.addEventListener('click', replaceOn);
 var replacePressed = false;
+
+//variables for save functionality
+var saveButton = document.getElementById('saveButton');
+saveButton.addEventListener('click', saveGrid);
+
+//variables for upload functionality
+var uploadElement = document.getElementById('imageChooser');
+uploadElement.addEventListener('change', readImage);
+var resizeElement = document.getElementById('resizeButton');
+resizeElement.addEventListener('click', resizeGrid);

@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+.button:hover{
+  font-weight: bold;
+}
+
+#saveButton{
+  display: block;
+}
+
+#resizeButton{
+  display: block;
+}
+
 .gradient{
   font-size: 57px;
   background-image: linear-gradient(to right,red,orange,yellow, green, blue,indigo,violet);
@@ -19,17 +31,21 @@
   left: 20%;
   border: 1px solid black;
   display: inline-block;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 #divGrid > div{
 }
 
 #divGrid > div > div{
-  width: 10px;
-  height: 10px;
+  width: 10px; /*default 10px*/
+  height: 10px; /*default 10px*/
   border-style:solid;
   border-width:thin;
-  border-color: #f2f2f2;
+  border-color: rgba(0, 0, 0, 0.1);
+  margin: 0;
   display: inline-block;
 }
 
