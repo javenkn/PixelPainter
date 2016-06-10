@@ -170,6 +170,8 @@ function fillPalette(){
 //function that sets the color that the user picks
 function chooseColor(event){
   colorChosen = this.style.backgroundColor;
+  erasePressed = false;
+  document.getElementById('eraseButton').style.backgroundColor = "";
 }
 
 //function that checks if the replace button is pressed
@@ -224,14 +226,18 @@ function resizeGrid(event){
     this.style.backgroundColor = "green";
     resizePressed = true;
 
+    //deletes the firstChild node (until there is none) but keeps the id divGrid
     var parent = document.getElementById('divGrid');
     while(parent.firstChild){
       parent.removeChild(parent.firstChild);
     }
-    divGrid = createGrid(120,250);
+    divGrid = createGrid(120,250); //creates a new resized grid
+
+    //adds all of the new grid's children into the divGrid div
     while(divGrid.children[0]){
       document.getElementById('divGrid').appendChild(divGrid.children[0]);
     }
+    //sets all of the settings of the new resized grid
     var cells = document.querySelectorAll('#divGrid > div > div');
     Array.prototype.forEach.call(cells, function(cell){
       cell.style.width = "2px";
@@ -240,18 +246,21 @@ function resizeGrid(event){
       cell.addEventListener('mousedown', clickDrag);
       cell.addEventListener('mouseup', stopDragging);
     });
-  }else if(resizePressed === true){
+  }else if(resizePressed === true){ //resets the resized grid back to the original
     this.style.backgroundColor = "";
     resizePressed = false;
 
+    //removes the children of the divGrid div
     var par = document.getElementById('divGrid');
     while(par.firstChild){
       par.removeChild(par.firstChild);
     }
+    //creates the original sized grid
     divGrid = createGrid(40,83);
-    while(divGrid.children[0]){
+    while(divGrid.children[0]){ //adds all of the children to the divGrid div
       document.getElementById('divGrid').appendChild(divGrid.children[0]);
     }
+    //adds the event listeners to each cell
     var orgCells = document.querySelectorAll('#divGrid > div > div');
     Array.prototype.forEach.call(orgCells, function(cell){
       cell.addEventListener('mousedown', clickDrag);
@@ -260,6 +269,7 @@ function resizeGrid(event){
   }
 }
 
+//variables for the title grid
 var titleElement = document.createElement('DIV');
 document.body.insertBefore(titleElement, document.body.firstChild);
 titleElement.id = "titleDiv";
@@ -267,10 +277,12 @@ var titleGrid = createGrid(7,41);
 var titleGridElement = document.getElementById('titleDiv').appendChild(titleGrid);
 titleGridElement.id = "titleGrid";
 
+//hardcoded the colors of border of the title
 var titleRow = document.getElementById('titleGrid').children;
 titleRow[0].style.backgroundColor = "rgb(0, 0, 128)";
 titleRow[6].style.backgroundColor = "rgb(0, 0, 128)";
 
+//set the onclick value of each cell to null;
 var titleCells = document.querySelectorAll('#titleGrid > div > div');
   Array.prototype.forEach.call(titleCells, function(cell, index){
       cell.onclick = null;
@@ -309,7 +321,7 @@ fillPalette();
 
 var paletteCells = document.querySelectorAll('#colorPalette > div > div');
 Array.prototype.forEach.call(paletteCells, function(cell){
-  cell.onclick = chooseColor;
+  cell.addEventListener('click',chooseColor);
 });
 
 //variables for replace functionality
