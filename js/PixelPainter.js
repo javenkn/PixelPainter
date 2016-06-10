@@ -183,12 +183,26 @@ function replaceOn(event){
   }
 }
 
-//saves the grid to location.hash and restores the saved image
+//saves the grid to location.hash
 function saveGrid(event){
-  if(window.location.hash === ""){
-    alert('Grid Saved.');
-    window.location.hash = divGrid;
-    var html = $.parseHTML(window.location.hash);
+  window.location.hash = divGrid.outerHTML;
+  alert('Grid Saved.');
+}
+
+//restores saved grid from location.hash
+function restoreGrid(event){
+  if(window.location.hash !== ""){
+    var parent = document.getElementById('pixelPainter');
+    parent.removeChild(document.getElementById('divGrid'));
+    divGrid = $.parseHTML(window.location.hash.slice(1))[0];
+    parent.appendChild(divGrid);
+
+    var cells = document.querySelectorAll('#divGrid > div > div');
+    Array.prototype.forEach.call(cells, function(cell){
+      cell.addEventListener('mousedown', clickDrag);
+      cell.addEventListener('mouseup', stopDragging);
+      cell.addEventListener('click',colorOneDiv);
+    });
   }
 }
 
@@ -303,9 +317,11 @@ var replaceButton = document.getElementById('replaceButton');
 replaceButton.addEventListener('click', replaceOn);
 var replacePressed = false;
 
-//variables for save functionality
+//variables for save & restore functionality
 var saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', saveGrid);
+var restoreButton = document.getElementById('restoreButton');
+restoreButton.addEventListener('click', restoreGrid);
 
 //variables for upload functionality
 var uploadElement = document.getElementById('imageChooser');
