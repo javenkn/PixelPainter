@@ -25,8 +25,6 @@ export default class Canvas extends React.Component{
         </div>
       );
     }
-    console.log(rowArr);
-    console.log(canvasGrid);
     return (
       <div id='canvas'>
         { canvasGrid }
