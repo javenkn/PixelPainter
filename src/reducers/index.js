@@ -4,6 +4,7 @@ import paletteReducer from './palette';
 
 const rootReducer = combineReducers({
   canvas: canvasReducer,
+  palette: paletteReducer
 });
 
 const finalCreateStore = compose(

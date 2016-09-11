@@ -1,13 +1,20 @@
 import React from 'react';
 import Pixel from './Pixel';
+import { connect } from 'react-redux';
+import {
+  selectAColor
+} from '../actions/palette';
 
-export default class Palette extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const mapStateToProps = (state) => {
+  return {
+    ...state
+  };
+}
+
+class Palette extends React.Component {
   render () {
-    const width = this.props.width;
-    const height = this.props.height;
+    const width = this.props.palette.colors[0].length;
+    const height = this.props.palette.colors.length;
     const rowArr = [];
     const paletteGrid = [];
     for(var i = 0; i < height; i++) {
@@ -16,6 +23,8 @@ export default class Palette extends React.Component {
         rowArr[i].push(
           <Pixel
             key={ j }
+            color={ this.props.palette.colors[i][j] }
+            handleClick={ this.props.selectAColor.bind(this, this.props.palette.colors[i][j])}
           />
         );
       }
@@ -42,3 +51,7 @@ export default class Palette extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps, {
+  selectAColor
+})(Palette);

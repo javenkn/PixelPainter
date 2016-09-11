@@ -26,7 +26,7 @@ class Canvas extends React.Component{
             key={ j }
             x={ j }
             y={ i }
-            handleClick={ this.props.changeColor.bind(this, i, j, 'red') }
+            handleClick={ this.props.changeColor.bind(this, i, j, this.props.palette.selectedColor) }
             color={ this.props.canvas[i][j] }
           />
         );
