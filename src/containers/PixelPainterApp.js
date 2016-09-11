@@ -3,15 +3,18 @@ import { Canvas, Palette } from '../components';
 
 
 export default class PixelPainterApp extends React.Component {
-  constructor (props) {
-    super(props);
-  }
   render () {
     return (
       <div id='PixelPainterApp'>
-        Welcome to Pixel Painter Redux!
-        <Canvas />
-        <Palette />
+        <h1>Welcome to Pixel Painter Redux!</h1>
+        <Canvas
+          width={10}
+          height={10}
+        />
+        <Palette
+          width={5}
+          height={10}
+        />
       </div>
     );
   }

@@ -1,13 +1,12 @@
-const redux = require('redux');
-const canvasReducer = require('./canvas');
-const paletteReducer = require('./palette');
+import { combineReducers, compose } from 'redux';
+import canvasReducer from './canvas';
+import paletteReducer from './palette';
 
-const rootReducer = redux.combineReducers({
+const rootReducer = combineReducers({
   canvas: canvasReducer,
-  palette: paletteReducer
 });
 
-const finalCreateStore = redux.compose(
+const finalCreateStore = compose(
   (window.devToolsExtension)
     ? window.devToolsExtension
     : function (x) { return x; }
