@@ -12,7 +12,7 @@ const initialState =
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case 'SELECT_COLOR':
-      const newState = state;
+      const newState = { ...state };
       newState.selectedColor = action.data.color;
       return newState;
     default:
