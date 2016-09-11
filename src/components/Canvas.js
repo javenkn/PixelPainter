@@ -14,8 +14,8 @@ const mapStateToProps = (state) => {
 
 class Canvas extends React.Component{
   render() {
-    const width = this.props.canvas.length;
-    const height = this.props.canvas[0].length;
+    const height = this.props.canvas.length;
+    const width = this.props.canvas[0].length;
     const rowArr = [];
     const canvasGrid = [];
     for(var i = 0; i < height; i++) {
