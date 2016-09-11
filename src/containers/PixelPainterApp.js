@@ -7,10 +7,7 @@ export default class PixelPainterApp extends React.Component {
     return (
       <div id='PixelPainterApp'>
         <h1>Welcome to Pixel Painter Redux!</h1>
-        <Canvas
-          width={10}
-          height={10}
-        />
+        <Canvas />
         <Palette
           width={5}
           height={10}

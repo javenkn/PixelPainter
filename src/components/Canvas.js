@@ -13,12 +13,7 @@ const mapStateToProps = (state) => {
 }
 
 class Canvas extends React.Component{
-  constructor(props) {
-    super(props);
-    this.colorPixel = this.props.changeColor.bind(this, 1, 1, 'red');
-  }
   render() {
-    console.log(this.props.canvas[0][0]);
     const width = this.props.canvas.length;
     const height = this.props.canvas[0].length;
     const rowArr = [];
@@ -26,11 +21,12 @@ class Canvas extends React.Component{
     for(var i = 0; i < height; i++) {
       rowArr[i] = [];
       for(var j = 0; j < width; j++) {
-        console.log(this.props.canvas[i][j]);
         rowArr[i].push(
           <Pixel
             key={ j }
-            handleClick={ this.colorPixel }
+            x={ j }
+            y={ i }
+            handleClick={ this.props.changeColor.bind(this, i, j, 'red') }
             color={ this.props.canvas[i][j] }
           />
         );
