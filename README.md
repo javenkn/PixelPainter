@@ -1,6 +1,8 @@
 PixelPainter v2
 ============
 
+![](./public/preview.png)
+
 ### Goal 
 Redo my original Pixel Painter mini project with React while learning and implementing React Hooks (over the weekend 😅).
 
